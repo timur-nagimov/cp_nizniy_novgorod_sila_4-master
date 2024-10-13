@@ -4,7 +4,7 @@
 * `source venv/bin/activate`
 * `pip install -r requirements.txt`
 ## Поднимаем базу данных:
-* Переходим в `/cd backend`
+* Переходим `cd backend`
 * Через `docker compose up` поднимается контейнер с postgres
 ## Создаем и применяем миграции
 * Находясь в папке `/backend`, прописываем `alembic revision --autogenerate -m 'init'`
