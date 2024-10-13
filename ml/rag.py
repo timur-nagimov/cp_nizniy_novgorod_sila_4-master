@@ -94,7 +94,7 @@ def get_fusion_retriever(index, vector_top_k=10, bm25_top_k=10, total_top_k=3):
     retriever = QueryFusionRetriever(
         [retriever_chunk, bm25_retriever],
         similarity_top_k=total_top_k,
-        num_queries=3,
+        num_queries=2,
         mode="reciprocal_rerank",
         use_async=True,
         verbose=True,
@@ -117,14 +117,11 @@ class ResponseWithChatHistory(CustomQueryComponent):
 
     def _validate_component_inputs(self, input: Dict[str, Any]) -> Dict[str, Any]:
         """Validate component inputs during run_component."""
-        # NOTE: this is OPTIONAL but we show you where to do validation as an example
         return input
 
     @property
     def _input_keys(self) -> set:
         """Input keys dict."""
-        # NOTE: These are required inputs. If you have optional inputs please override
-        # `optional_input_keys_dict`
         return {"nodes", "query_str"}
 
     @property
@@ -224,7 +221,9 @@ def contains_chinese(text):
 def get_response(history_str, query_str):
     router_prompt = prompts.ROUTER_PROMPT.format(query_str=query_str)
     router_res = Settings.llm.complete(router_prompt)
-    if router_res != "0":
+
+    # print("ROUTER RESULT", router_res)
+    if str(router_res) != "0":
         index = load_index()
         retriever = get_fusion_retriever(index)
         pipeline = get_rag_pipeline(retriever)
@@ -234,7 +233,7 @@ def get_response(history_str, query_str):
         )
 
         if contains_chinese(response["response"].text):
-            print("CHINESE DETECTED")
+            # print("CHINESE DETECTED")
             response, intermediates = pipeline.run_with_intermediates(
                 query_str=query_str, chat_history_str=history_str
             )

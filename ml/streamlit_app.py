@@ -47,14 +47,15 @@ for message in st.session_state.messages:
 
 log = None
 if prompt := st.chat_input("Введите свой запрос"):
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    
 
     with st.chat_message("user"):
         st.markdown(prompt)
 
     preset_answer = get_answer(prompt, threshold=0.9)
     if preset_answer:
-        print("PRESET ANSWER")
+        # print("PRESET ANSWER")
+        st.session_state.messages.append({"role": "user", "content": prompt})
         st.markdown(preset_answer)
         st.session_state.messages.append(
             {"role": "assistant", "content": preset_answer}
@@ -67,13 +68,15 @@ if prompt := st.chat_input("Введите свой запрос"):
                 for msg in st.session_state.messages[-5:]
             ]
         )
+        print(history_str)
 
         with st.spinner("Обработка запроса"):
             with st.chat_message("assistant"):
                 response = get_response(history_str, prompt)
                 if isinstance(response, str):
-                    print("CLASSIFIED RESPONSE")
+                    # print("CLASSIFIED RESPONSE")
                     st.markdown(response)
+                    st.session_state.messages.append({"role": "user", "content": prompt})
                     st.session_state.messages.append(
                         {"role": "assistant", "content": response}
                     )
@@ -81,6 +84,7 @@ if prompt := st.chat_input("Введите свой запрос"):
                 else:
                     display_collapsible_docs(response["context"])
                     st.markdown(response["response"].text)
+                    st.session_state.messages.append({"role": "user", "content": prompt})
                     st.session_state.messages.append(
                         {
                             "role": "assistant",
