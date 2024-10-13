@@ -5,7 +5,7 @@
 * `pip install -r requirements.txt`
 ## Поднимаем базу данных:
 * Переходим `cd backend`
-* Через `docker compose up` поднимается контейнер с postgres
+* Через `sudo docker-compose up` поднимается контейнер с postgres
 ## Создаем и применяем миграции
 * Находясь в папке `/backend`, прописываем `alembic revision --autogenerate -m 'init'`
 * Применяем миграции: `alembic upgrade head`
