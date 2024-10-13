@@ -80,7 +80,7 @@ celerybeat-schedule
 celeryev.pid
 
 # Honcho
-.env
+# .env
 
 # scripts data
 scripts/edu_question*
