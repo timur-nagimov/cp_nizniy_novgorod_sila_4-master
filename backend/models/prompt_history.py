@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Text, Integer, Identity
 
-from db.init import Base
+from backend.db.init import Base
 
 
 class PromptHistory(Base):

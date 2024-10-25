@@ -1,5 +1,4 @@
 from difflib import SequenceMatcher
-import joblib
 
 from backend.db.init import session
 from backend.models.prompt_history import PromptHistory
