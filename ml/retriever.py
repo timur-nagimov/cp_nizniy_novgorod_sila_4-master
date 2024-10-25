@@ -21,7 +21,7 @@ def load_embedder():
     HuggingFaceEmbedding: Объект модели эмбеддингов.
     """
     Settings.embed_model = HuggingFaceEmbedding(
-        model_name="intfloat/multilingual-e5-large", device="cuda"
+        model_name="intfloat/multilingual-e5-large", device="cpu"
     )
 
     return Settings.embed_model

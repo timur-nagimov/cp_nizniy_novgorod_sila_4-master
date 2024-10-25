@@ -1,5 +1,5 @@
 from llama_index.core.query_pipeline import CustomQueryComponent
-from llama_index.llms.huggingface import HuggingFaceLLM
+from llama_index.llms.langchain import LangChainLLM
 from llama_index.core.bridge.pydantic import Field
 from llama_index.core.llms import ChatMessage
 from llama_index.core.schema import NodeWithScore
@@ -10,7 +10,7 @@ import prompts
 
 
 class ResponseWithChatHistory(CustomQueryComponent):
-    llm: HuggingFaceLLM = Field(..., description="Local LLM")
+    llm: LangChainLLM = Field(..., description="LLM")
     system_prompt: Optional[str] = Field(
         default=None, description="System prompt to use for the LLM"
     )
