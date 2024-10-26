@@ -41,7 +41,7 @@ class ResponseWithChatHistory(CustomQueryComponent):
         for idx, node in enumerate(nodes):
             node_text = node.get_text()
             node_meta = node.dict()["node"]["metadata"]
-            node_context += f"Контекст {idx + 1}: \n Источник: {node_meta['source']} \n {node_text}\n\n"
+            node_context += f"Контекст {idx + 1}: \n {node_text}\n\n"
 
         formatted_context = self.context_prompt.format(
             node_context=node_context, query_str=query_str
