@@ -59,11 +59,9 @@ def get_fusion_retriever(index, vector_top_k=10, bm25_top_k=10, total_top_k=3):
     """
     vector_retriever_chunk = index.as_retriever(similarity_top_k=vector_top_k)
 
-    all_nodes_dict = joblib.load("ml/all_nodes_dict.pkl")
     retriever_chunk = RecursiveRetriever(
         "vector",
         retriever_dict={"vector": vector_retriever_chunk},
-        node_dict=all_nodes_dict,
         verbose=True,
     )
 
