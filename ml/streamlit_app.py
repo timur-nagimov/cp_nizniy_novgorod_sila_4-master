@@ -30,14 +30,9 @@ def initialize_models():
     load_yandex_gpt()
     load_embedder()
 
-@st.cache_resource
-def load_images_dict():
-    return joblib.load('./ml/image_name_to_hash.pkl')
-
 
 # Инициализация моделей при запуске приложения
 initialize_models()
-IMG_DICT = load_images_dict()
 
 
 def find_images(image_ref, image_folder='./images/'):
