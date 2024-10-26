@@ -10,8 +10,7 @@
 * Через `sudo docker-compose up` поднимается контейнер с postgres
 * Остальные операции выполняем в отдельном терминале(тоже через виртуальное окружение)
 ## Создаем и применяем миграции
-* Находясь в папке `/backend`, прописываем `alembic revision --autogenerate -m 'init'`
-* Применяем миграции: `alembic upgrade head`
+* Применяем миграции из главной папки: `alembic upgrade head`
 ## Поднимаем модель:
 * Из главной папки подгружаем в БД данные: python3 upload_to_bd.py
 * Находясь в главной папке, прописываем: `streamlit run ml/streamlit_app.py`
