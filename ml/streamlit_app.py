@@ -59,7 +59,6 @@ def display_collapsible_docs(context):
 
             st.markdown(text)
             for img in img_list:
-                # img_hash = IMG_DICT[img]
                 st.image(f'./images/{img}.png', caption=img)
 
 
@@ -92,7 +91,7 @@ if prompt := st.chat_input("Введите свой запрос"):
         st.markdown(preset_answer)
 
         image_refs = re.findall(r'\(Рисунок\s\d+\)', preset_answer)
-        for image_ref in image_refs:
+        for image_ref in list(dict.fromkeys(image_refs)):
             img_name = find_images(image_ref=image_ref)
             st.image(f'./images/{img_name}', caption=img_name.split('.png')[0])
 
@@ -116,12 +115,6 @@ if prompt := st.chat_input("Введите свой запрос"):
 
                 if isinstance(response, str):
                     st.markdown(response)
-
-                    image_refs = re.findall(r'\(Рисунок\s\d+\)', response)
-                    for image_ref in image_refs:
-                        img_name = find_images(image_ref=image_ref)
-                        st.image(f'./images/{img_name}', caption=img_name.split('.png')[0])
-
                     st.session_state.messages.append(
                         {"role": "user", "content": prompt}
                     )
@@ -136,7 +129,7 @@ if prompt := st.chat_input("Введите свой запрос"):
                     st.markdown(response_text)
 
                     image_refs = re.findall(r'\(Рисунок\s\d+\)', response_text)
-                    for image_ref in image_refs:
+                    for image_ref in list(dict.fromkeys(image_refs)):
                         img_name = find_images(image_ref=image_ref)
                         st.image(f'./images/{img_name}', caption=img_name.split('.png')[0])
 

@@ -79,7 +79,7 @@ def get_fusion_retriever(index, vector_top_k=10, bm25_top_k=10, total_top_k=3):
         mode="reciprocal_rerank",
         use_async=True,
         verbose=True,
-        retriever_weights=[0.8, 0.2],
+        retriever_weights=[0.85, 0.15],
         query_gen_prompt=prompts.QUERY_GEN_PROMPT,
     )
 
