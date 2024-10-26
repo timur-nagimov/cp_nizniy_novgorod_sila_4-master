@@ -41,7 +41,14 @@ class ResponseWithChatHistory(CustomQueryComponent):
         for idx, node in enumerate(nodes):
             node_text = node.get_text()
             node_meta = node.dict()["node"]["metadata"]
-            node_context += f"Контекст {idx + 1}: \n {node_text}\n\n"
+
+            print(node_meta)
+            print(node.id_)
+            
+            if node_meta.get('level_3') == '0 ':
+                node_context += f"### {node_meta.get('level_2')} \n #### Страница {int(node_meta.get('page'))}  \n {node_text} \n\n РИСУНКИ: {node_meta.get('figures')} \n\n\n"
+            else:
+                node_context += f"### {node_meta.get('level_3')} \n #### Страница {int(node_meta.get('page'))}  \n {node_text} \n\n РИСУНКИ: {node_meta.get('figures')} \n\n\n"
 
         formatted_context = self.context_prompt.format(
             node_context=node_context, query_str=query_str
