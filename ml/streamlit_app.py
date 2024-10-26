@@ -1,5 +1,8 @@
 import os
 import sys
+import joblib
+import ast
+import re
 import streamlit as st
 
 # ADD BACKEND TO PATH
@@ -15,7 +18,7 @@ from retriever import load_embedder
 from preset import get_answer
 
 
-st.title('Чат-бот ОАО "РЖД"')
+st.title('Чат-бот по руководству пользователя')
 
 
 @st.cache_resource
@@ -27,9 +30,21 @@ def initialize_models():
     load_yandex_gpt()
     load_embedder()
 
+@st.cache_resource
+def load_images_dict():
+    return joblib.load('./ml/image_name_to_hash.pkl')
+
 
 # Инициализация моделей при запуске приложения
 initialize_models()
+IMG_DICT = load_images_dict()
+
+
+def find_images(image_ref, image_folder='./images/'):
+    image_ref = image_ref.replace(')', '').replace('(', '')
+    found_images = [f for f in os.listdir(image_folder) if f.startswith(image_ref)]
+
+    return found_images[0]
 
 
 def display_collapsible_docs(context):
@@ -40,7 +55,17 @@ def display_collapsible_docs(context):
     context (str): Текст контекста (использованные документы), который будет отображен в сворачиваемом виде.
     """
     with st.expander("Использованные отрывки документа:", expanded=False):
-        st.markdown(context)
+        context_list = context.split('\n\n\n')[:-1]
+        for cont in context_list:
+            print(cont.split('РИСУНКИ: '))
+            text, images = cont.split('РИСУНКИ: ')
+            img_list = ast.literal_eval(images.strip())
+            # print(img_list)
+
+            st.markdown(text)
+            for img in img_list:
+                # img_hash = IMG_DICT[img]
+                st.image(f'./images/{img}.png', caption=img)
 
 
 # Проверка, если сессия сообщений не инициализирована, то создаём её
@@ -70,6 +95,12 @@ if prompt := st.chat_input("Введите свой запрос"):
     if preset_answer:
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.markdown(preset_answer)
+
+        image_refs = re.findall(r'\(Рисунок\s\d+\)', preset_answer)
+        for image_ref in image_refs:
+            img_name = find_images(image_ref=image_ref)
+            st.image(f'./images/{img_name}', caption=img_name.split('.png')[0])
+
         st.session_state.messages.append(
             {"role": "assistant", "content": preset_answer}
         )
@@ -82,12 +113,20 @@ if prompt := st.chat_input("Введите свой запрос"):
             ]
         )
 
-        with st.spinner("Обработка запроса"):
-            with st.chat_message("assistant"):
+        
+        with st.chat_message("assistant"):
+            with st.spinner("Обработка запроса"):
                 # Получаем ответ
                 response = get_response_with_routing(history_str, prompt)
+
                 if isinstance(response, str):
                     st.markdown(response)
+
+                    image_refs = re.findall(r'\(Рисунок\s\d+\)', response)
+                    for image_ref in image_refs:
+                        img_name = find_images(image_ref=image_ref)
+                        st.image(f'./images/{img_name}', caption=img_name.split('.png')[0])
+
                     st.session_state.messages.append(
                         {"role": "user", "content": prompt}
                     )
@@ -98,7 +137,14 @@ if prompt := st.chat_input("Введите свой запрос"):
                 else:
                     # Отображаем полученный контекст
                     display_collapsible_docs(response["context"])
-                    st.markdown(response["response"].text)
+                    response_text = response["response"].text
+                    st.markdown(response_text)
+
+                    image_refs = re.findall(r'\(Рисунок\s\d+\)', response_text)
+                    for image_ref in image_refs:
+                        img_name = find_images(image_ref=image_ref)
+                        st.image(f'./images/{img_name}', caption=img_name.split('.png')[0])
+
                     st.session_state.messages.append(
                         {"role": "user", "content": prompt}
                     )
