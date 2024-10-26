@@ -115,5 +115,4 @@ pytest-cov-report.xml
 .ipynb_checkpoints
 
 coverage-report-html/
-images/
 ml/image_name_to_hash.pkl
