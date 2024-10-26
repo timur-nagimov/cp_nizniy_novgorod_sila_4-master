@@ -41,14 +41,19 @@ class ResponseWithChatHistory(CustomQueryComponent):
         for idx, node in enumerate(nodes):
             node_text = node.get_text()
             node_meta = node.dict()["node"]["metadata"]
-
-            print(node_meta)
-            print(node.id_)
             
+            try:
+                page = int(node_meta.get('page'))
+            except:
+                page = 0
+
             if node_meta.get('level_3') == '0 ':
-                node_context += f"### {node_meta.get('level_2')} \n #### Страница {int(node_meta.get('page'))}  \n {node_text} \n\n РИСУНКИ: {node_meta.get('figures')} \n\n\n"
+                if node_meta.get('level_2') == '0 ':
+                    node_context += f"### {node_meta.get('level_1')} \n #### Страница {page}  \n {node_text} \n\n РИСУНКИ: {node_meta.get('figures')} \n\n\n"
+                else:
+                    node_context += f"### {node_meta.get('level_2')} \n #### Страница {page}  \n {node_text} \n\n РИСУНКИ: {node_meta.get('figures')} \n\n\n"
             else:
-                node_context += f"### {node_meta.get('level_3')} \n #### Страница {int(node_meta.get('page'))}  \n {node_text} \n\n РИСУНКИ: {node_meta.get('figures')} \n\n\n"
+                node_context += f"### {node_meta.get('level_3')} \n #### Страница {page}  \n {node_text} \n\n РИСУНКИ: {node_meta.get('figures')} \n\n\n"
 
         formatted_context = self.context_prompt.format(
             node_context=node_context, query_str=query_str
