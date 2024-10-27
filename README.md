@@ -14,9 +14,11 @@
 * Находясь в главной папке, прописываем: `streamlit run ml/streamlit_app.py`
 
 ## Описание ML части
-* NPA_splitter.ipynb - нарезка исходного документа на разделы и подразделы
 * splitter.ipynb - нарезка исходного документа на разделы и подразделы
-* ml/rag.py - функции и классы для построения RAG пайплайна на llama-index, в качестве LLM - Qwen 2.5 7B Instruct
+* ml/rag.py - функции и классы для построения RAG пайплайна на llama-index
 * ml/prompts.py - промпты используемые в пайплайне
 * ml/preset.py - функции для поиска похожих запросов в имеющейся базе знаний
 * ml/streamlit_app.py - создание интерфейса на streamlit 
+* ml/custom_response.py - измененный класс CustomQueryComponent для форматирования выдающейся в пайплайне информации
+* ml/retriever.py - функции для загрузки индекса и ретривера
+* ml/yandex_gpt.py - функции для инициализации YandexGPT 
