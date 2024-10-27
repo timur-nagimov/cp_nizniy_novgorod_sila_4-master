@@ -1,6 +1,4 @@
 ## Создаем виртуальное окружение и устанавливаем библиотеки:
-Прописываем: `export PYTHONPATH=$PYTHONPATH:/home/user1/hack_dev/backend` - с особенностями пути после скачивания репозитория
-
 Команды предполагают использование MacOS/Ubuntu
 * `python3 -m venv venv`
 * `source venv/bin/activate`
