@@ -22,3 +22,7 @@
 * ml/custom_response.py - измененный класс CustomQueryComponent для форматирования выдающейся в пайплайне информации
 * ml/retriever.py - функции для загрузки индекса и ретривера
 * ml/yandex_gpt.py - функции для инициализации YandexGPT 
+
+## Метрики  
+С помощью фреймворка [RAGAS](ragas.io) сгенерированы вопросы и ответы по чанкам (разделам документа).  
+Получены следующие метрики - [Context Precision](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_precision/) 78.4, [Faithfulness](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/) 93.2
