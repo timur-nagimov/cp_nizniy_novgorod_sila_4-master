@@ -59,7 +59,10 @@ def display_collapsible_docs(context):
 
             st.markdown(text)
             for img in img_list:
-                st.image(f'./images/{img}.png', caption=img)
+                try:
+                    st.image(f'./images/{img}.png', caption=img)
+                except:
+                    print(f'COULDNT SHOW IMAGE {img}')
 
 
 # Проверка, если сессия сообщений не инициализирована, то создаём её
