@@ -65,6 +65,7 @@ def display_collapsible_docs(context):
                     print(f'COULDNT SHOW IMAGE {img}')
 
 
+
 # Проверка, если сессия сообщений не инициализирована, то создаём её
 if "messages" not in st.session_state:
     st.session_state.messages = []
