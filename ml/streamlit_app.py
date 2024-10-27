@@ -5,6 +5,7 @@ import ast
 import re
 import streamlit as st
 
+
 # ADD BACKEND TO PATH
 path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(path)
@@ -59,7 +60,11 @@ def display_collapsible_docs(context):
 
             st.markdown(text)
             for img in img_list:
-                st.image(f'./images/{img}.png', caption=img)
+                try:
+                    st.image(f'./images/{img}.png', caption=img)
+                except:
+                    print(f'COULDNT SHOW IMAGE {img}')
+
 
 
 # Проверка, если сессия сообщений не инициализирована, то создаём её
