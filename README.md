@@ -25,4 +25,4 @@
 
 ## Метрики  
 С помощью фреймворка [RAGAS](ragas.io) сгенерированы вопросы и ответы по чанкам (разделам документа), доступные в файле ragas_df.pkl.  
-Получены следующие метрики - [Context Precision](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_precision/) 78.4, [Faithfulness](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/) 93.2
+Получены следующие метрики - [Context Precision](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_precision/) 78.4, [Faithfulness](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/) 93.2, [Context Recall](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_recall/) 80.7, [Response Relevancy](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/answer_relevance/) 85.1
